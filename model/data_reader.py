@@ -15,6 +15,28 @@ class DataReader:
     def __init__(self):
         print('DataReader initialized')
 
+    def read_dataset_into_df2(self, dataset_path, specific_folder):
+        '''
+        Reads data only from the specified folder instead of always reading the first one.
+        '''
+        dfs = []
+        date_folder_path = os.path.join(dataset_path, specific_folder)
+        
+        if os.path.isdir(date_folder_path):
+            print(f'Operating on: {date_folder_path}')
+            for file in os.listdir(date_folder_path):
+                file_path = os.path.join(date_folder_path, file)
+                try:
+                    df = self.read_json_file_to_df(file_path)
+                    dfs.append(df)
+                except Exception as e:
+                    print(f'Exception occurred while trying to read {file_path} to dataframe {e}')
+
+        if dfs:
+            return pd.concat(dfs, ignore_index=True)
+        else:
+            return pd.DataFrame()
+
     def read_dataset_into_df(self, dataset_path, num_of_folders_to_read):
         dfs = []
         num_of_folders_read = 0
