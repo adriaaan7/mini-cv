@@ -1,2 +1,6 @@
+numpy
+scikit-learn
 pandas
 xgboost
+tensorflow[and-cuda]
+matplotlib
